@@ -1,0 +1,27 @@
+/*
+Obtained from Practical 5, written by David Cooper,
+https://lms.curtin.edu.au/webapps/blackboard/content/listContent.jsp?course_id=_99741_1&content_id=_8118282_1&mode=reset
+(Accessed on 20 October 2020)
+*/
+
+plugins {
+    id 'cpp-library'
+}
+
+tasks.withType(CppCompile).configureEach {
+    includes "$System.env.JAVA_HOME/include"
+    includes "$System.env.JAVA_HOME/include/linux"
+    includes "$System.env.JAVA_HOME/include/win32"
+}
+
+library {
+    baseName = 'progBar'
+
+    linkage = [Linkage.SHARED]
+    
+    targetMachines = [
+        machines.linux.x86_64,
+        machines.windows.x86_64,
+        machines.macOS.x86_64
+    ]
+}

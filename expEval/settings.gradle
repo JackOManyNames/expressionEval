@@ -1,0 +1,2 @@
+rootProject.name = 'expEval'
+include 'api', 'c_code', 'cli', 'cPlugin', 'fibFact', 'progbar', 'saveCSV'

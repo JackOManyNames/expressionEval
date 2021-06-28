@@ -1,0 +1,51 @@
+plugins{
+    id 'java'
+    id 'application'
+    id 'groovy'
+}
+
+evaluationDependsOn ':c_code'
+
+def libTasks = project(':c_code').tasks
+def debugLibTask = libTasks.matching{ it.name.startsWith('linkDebug') }.first()
+def releaseLibTask = libTasks.matching{ it.name.startsWith('linkRelease') }.first()
+
+repositories{
+    jcenter()
+}
+
+dependencies {
+    implementation project(':api')
+    implementation project(':progbar')
+    implementation project(':saveCSV')
+    implementation project(':fibFact')
+    implementation project(':cPlugin')
+
+    runtimeOnly files(releaseLibTask.linkedFile)
+
+    implementation 'com.google.guava:guava:28.0-jre'
+    implementation 'org.python:jython-standalone:2.7.1'
+	
+    testImplementation 'org.codehaus.groovy:groovy-all:2.5.7'
+    testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
+    testImplementation 'junit:junit:4.12'
+}
+
+application{
+    mainClassName = 'UI'
+}
+
+run{
+    standardInput = System.in
+    dependsOn debugLibTask
+    systemProperty 'java.library.path', debugLibTask.linkedFile.get().asFile.parentFile
+}
+
+startScripts{
+    defaultJvmOpts = ['-Djava.library.path=APP_HOME_PLACEHOLDER/lib']
+
+    doLast{
+        unixScript.text = unixScript.text.replace('APP_HOME_PLACEHOLDER', '$APP_HOME')
+        windowsScript.text = windowsScript.text.replace('APP_HOME_PLACEHOLDER', '%APP_HOME%')
+    }
+}

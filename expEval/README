@@ -1,0 +1,41 @@
+The following files are for an Expression Evaluation application.
+This application when run will evaluate an inputted expression that
+contains a variable 'x', then evaluates the expression for different
+variables of 'x'.
+
+For example: x + 5
+
+A user is required to enter three numbers, one acting as the minimum, one action
+as the maximum, and the last acting as the increment.
+The application shall then evaluate the expression, incrementing up until it
+either equals or exceeds the inputted maximum value entered.
+
+This application was made with plugins in mind: 
+- one to show a progress bar as the expressions run
+- one to that saves the results to a CSV file
+- one to add in both Fibonacci and Factorial options for expressions
+- one to add in a progress bar, but coded to interact with code in C++
+
+
+
+Note: When running this using gradlew run, please use the following
+command:
+
+for Linux/unix: ./gradlew -q run --console=plain
+
+for windows: gradlew -q run --console=plain
+
+This will result in the output not being cluttered by
+the gradle running task bars.
+
+The names of the Plugins are as follows:
+Progress tracker: ProgBar
+
+Saving results to CSV File: SaveCSV
+
+Adding Factorial / Fibonacci functionality: FibFact
+
+Adding Function programmed in C: CProgBar
+
+
+Search the cli file to find Result.csv if using SaveCSV
